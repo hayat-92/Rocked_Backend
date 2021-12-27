@@ -15,6 +15,6 @@ function callbackfxn(req, res) {
 }
 
 
-router.get('/', callbackfxn);
+router.post('/', callbackfxn);
 
 

@@ -8,6 +8,7 @@ const authRoute=require("./auth.route")
 // })
 router.use("/crops", CropRoute);
 router.use("/auth", authRoute);
+router.use("/model", modelRoute);
 
 
 
