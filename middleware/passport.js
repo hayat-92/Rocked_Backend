@@ -16,12 +16,11 @@ const jwtOptions = {
 
 const jwtVerify = async (payload, done) => {
 
-  if(payload.type !== tokenTypes.ACCESS){
+  if(payload.type !== ACCESS){
     return done(Error("Invalid token type"), null);
   }
 
   User.findById(payload.sub, function(err, user){
-    logger.info("world-2")
     
     if(err){
       return done(err, false);

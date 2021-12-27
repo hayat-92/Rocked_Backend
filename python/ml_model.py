@@ -3,7 +3,7 @@ from sklearn import preprocessing
 from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
 
-excel = pd.read_excel('Crop.xlsx', header = 0)
+excel = pd.read_excel('python/crop.xlsx', header = 0)
 print(excel)
 print(excel.shape)
 
