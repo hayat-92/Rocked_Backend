@@ -8,15 +8,15 @@ const mongoose = require("mongoose");
 app.use("/v1", routes);
 
 const port = 8081;
-
-mongoose.connect(url).then(() => {
+/*
+mongoose.connect(url).then(() => {*/
 
     console.log("Connected to MongoDB");
   
     app.listen(port, () => {
       console.log(`App is running on port ${port}`);
     });
-  });
+ // });
 
 // app.listen(port, function () {
 //     console.log(`Nodejs server started on port ${port}`);
