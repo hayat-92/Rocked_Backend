@@ -4,17 +4,23 @@ var spawn = require("child_process").spawn;
 
 
 function callbackfxn(req, res) {
-    var arr=["./hello.py",];
-    (req.body.data).map((elem)=>{
+    var arr=["./python/ml_model.py"];
+    (req.body.arr).map((elem)=>{
         arr.push(elem);
     })
-    var process = spawn('python', arr);
-    process.stdout.on('data', function (data) {
-        res.send(data.toString());
+    console.log('Array:', arr);
+    var childProcess = spawn('python', arr);
+    childProcess.stdout.on('data', function (data) {
+        let vx=data.toString();
+        console.log(typeof vx);
+        res.json({crop_name: vx});
+    })
+    childProcess.stderr.on('data', function(data) {
+        console.log('runs:', data.toString('utf8'))
     })
 }
 
 
 router.post('/', callbackfxn);
 
-
+module.exports = router;

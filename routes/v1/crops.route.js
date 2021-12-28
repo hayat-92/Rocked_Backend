@@ -4,7 +4,7 @@ const router = express.Router();
 const httpStatus = require("http-status");
 const Crop = require("../../model/crop");
 
-const spawn=require('child_process');
+const spawn=require('child_process').spawn;
 
 const process=spawn('python', ['../python/ml_model.py']);
 

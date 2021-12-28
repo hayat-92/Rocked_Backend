@@ -2,10 +2,12 @@ import pandas as pd
 from sklearn import preprocessing
 from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
+import sys
+
 
 excel = pd.read_excel('python/crop.xlsx', header = 0)
-print(excel)
-print(excel.shape)
+# print(excel)
+# print(excel.shape)
 
 
 le = preprocessing.LabelEncoder()
@@ -25,29 +27,36 @@ features = list(zip(NITROGEN, PHOSPHORUS, POTASSIUM, TEMPERATURE, HUMIDITY, PH, 
 features = np.array([NITROGEN, PHOSPHORUS, POTASSIUM, TEMPERATURE, HUMIDITY, PH, RAINFALL])
 
 features = features.transpose()
-print(features.shape)
-print(crop.shape)
+# print(features.shape)
+# print(crop.shape)
 
 model = KNeighborsClassifier(n_neighbors=3)
 model.fit(features, crop)  # model training
 
 # Taking inputs
 
-nitrogen_content = float(input("Enter nitrogen: "))
-phosphorus_content = float(input("Enter Phosphorus: "))
-potassium_content = float(input("Enter Potassium: "))
-temperature_content = float(input("Enter temperature: "))
-humidity_content = float(input("Enter humidity: "))                                                                                                  
-ph_content = float(input("Enter pH: "))
-rainfall = float(input("Enter rainfall: "))
+# nitrogen_content = float(input("Enter nitrogen: "))
+# phosphorus_content = float(input("Enter Phosphorus: "))
+# potassium_content = float(input("Enter Potassium: "))
+# temperature_content = float(input("Enter temperature: "))
+# humidity_content = float(input("Enter humidity: "))                                                                                                  
+# ph_content = float(input("Enter pH: "))
+# rainfall = float(input("Enter rainfall: "))
+nitrogen_content = float(sys.argv[1])
+phosphorus_content = float(sys.argv[2])
+potassium_content = float(sys.argv[3])
+temperature_content = float(sys.argv[4])
+humidity_content = float(sys.argv[5])                                                                                                  
+ph_content = float(sys.argv[6])
+rainfall = float(sys.argv[7])
 
 
 predict1 = np.array([nitrogen_content,phosphorus_content, potassium_content, temperature_content, humidity_content, ph_content, rainfall])
-print(predict1)
+# print(predict1)
 predict1 = predict1.reshape(1,-1)
-print(predict1)
+# print(predict1)
 predict1 = model.predict(predict1) # predicting
-print(predict1)
+# print(predict1)
 crop_name = str()
 if predict1 == 0:
 	crop_name = 'Apple'
@@ -94,5 +103,6 @@ elif predict1 == 20:
 elif predict1 == 21:
 	crop_name = 'Watermelon'
 
-print('Suggested Crop: ',crop_name)
-model.save("model.h5")
+print(crop_name)
+# sys.stdout(crop_name)
+# model.save("model.h5")
