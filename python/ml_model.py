@@ -1,47 +1,39 @@
 import pandas as pd
 from sklearn import preprocessing
-from sklearn.neighbors import KNeighborsClassifier
+#from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 import sys
 
-
 excel = pd.read_excel('python/crop.xlsx', header = 0)
-# print(excel)
-# print(excel.shape)
 
 
-le = preprocessing.LabelEncoder()
-crop = le.fit_transform(list(excel["CROP"]))  # to associate numeric values to crops
+lable = preprocessing.LabelEncoder()
+crop = lable.fit_transform(list(excel["CROP"]))  # to associate numeric values to crops
 
 
-NITROGEN = list(excel["NITROGEN"])
-PHOSPHORUS = list(excel["PHOSPHORUS"])
-POTASSIUM = list(excel["POTASSIUM"])
+NITROGEN_Content = list(excel["NITROGEN"])
+PHOSPHORUS_Content = list(excel["PHOSPHORUS"])
+POTASSIUM_Content = list(excel["POTASSIUM"])
 TEMPERATURE = list(excel["TEMPERATURE"])
-HUMIDITY = list(excel["HUMIDITY"])
-PH = list(excel["PH"])
+HUMIDITY_level = list(excel["HUMIDITY"])
+PH_value = list(excel["PH"])
 RAINFALL = list(excel["RAINFALL"])
 
 
-features = list(zip(NITROGEN, PHOSPHORUS, POTASSIUM, TEMPERATURE, HUMIDITY, PH, RAINFALL))
-features = np.array([NITROGEN, PHOSPHORUS, POTASSIUM, TEMPERATURE, HUMIDITY, PH, RAINFALL])
+Features = list(zip(NITROGEN_Content, PHOSPHORUS_Content, POTASSIUM_Content, TEMPERATURE, HUMIDITY_level, PH_value, RAINFALL))
+Features = np.array([NITROGEN_Content, PHOSPHORUS_Content, POTASSIUM_Content, TEMPERATURE, HUMIDITY_level, PH_value, RAINFALL])
 
-features = features.transpose()
-# print(features.shape)
-# print(crop.shape)
+Features = Features.transpose()
 
-model = KNeighborsClassifier(n_neighbors=3)
-model.fit(features, crop)  # model training
 
+
+#model = KNeighborsClassifier(n_neighbors=3)
+#model.fit(features, crop)  # model training
+regressor = RandomForestClassifier(n_estimators = 1000, random_state = 42)
+regressor.fit(Features, crop)
 # Taking inputs
 
-# nitrogen_content = float(input("Enter nitrogen: "))
-# phosphorus_content = float(input("Enter Phosphorus: "))
-# potassium_content = float(input("Enter Potassium: "))
-# temperature_content = float(input("Enter temperature: "))
-# humidity_content = float(input("Enter humidity: "))                                                                                                  
-# ph_content = float(input("Enter pH: "))
-# rainfall = float(input("Enter rainfall: "))
 nitrogen_content = float(sys.argv[1])
 phosphorus_content = float(sys.argv[2])
 potassium_content = float(sys.argv[3])
@@ -50,59 +42,56 @@ humidity_content = float(sys.argv[5])
 ph_content = float(sys.argv[6])
 rainfall = float(sys.argv[7])
 
+predict_data = np.array([nitrogen_content,phosphorus_content, potassium_content, temperature_content, humidity_content, ph_content, rainfall])
 
-predict1 = np.array([nitrogen_content,phosphorus_content, potassium_content, temperature_content, humidity_content, ph_content, rainfall])
-# print(predict1)
-predict1 = predict1.reshape(1,-1)
-# print(predict1)
-predict1 = model.predict(predict1) # predicting
-# print(predict1)
+predict1 = predict_data.reshape(1,-1)
+
+predict_crop = regressor.predict(predict1) # predicting
+
 crop_name = str()
-if predict1 == 0:
-	crop_name = 'Apple'
-elif predict1 == 1:
-	crop_name = 'Banana'
-elif predict1 == 2:
-	crop_name = 'Blackgram'
-elif predict1 == 3:
-	crop_name = 'Chickpea'
-elif predict1 == 4:
-	crop_name = 'Coconut'
-elif predict1 == 5:
-	crop_name = 'Coffee'
-elif predict1 == 6:
-	crop_name = 'Cotton'
-elif predict1 == 7:
-	crop_name = 'Grapes'
-elif predict1 == 8:
-	crop_name = 'Jute'
-elif predict1 == 9:
-	crop_name = 'Kidneybeans'
-elif predict1 == 10:
-	crop_name = 'Lentil'
-elif predict1 == 11:
-	crop_name = 'Maize'
-elif predict1 == 12:
-	crop_name = 'Mango'
-elif predict1 == 13:
-	crop_name = 'Mothbeans'
-elif predict1 == 14:
-	crop_name = 'Mungbeans'
-elif predict1 == 15:
-	crop_name = 'Muskmelon'
-elif predict1 == 16:
-	crop_name = 'Orange'
-elif predict1 == 17:
-	crop_name = 'Papaya'
-elif predict1 == 18:
-	crop_name = 'Pigeonpeas'
-elif predict1 == 19:
-	crop_name = 'Pomegranate'
-elif predict1 == 20:
-	crop_name = 'Rice'
-elif predict1 == 21:
-	crop_name = 'Watermelon'
+if predict_crop == 0:
+  crop_name = 'Apple'
+elif predict_crop == 1:
+  crop_name = 'Banana'
+elif predict_crop == 2:
+  crop_name = 'Blackgram'
+elif predict_crop == 3:
+  crop_name = 'Chickpea'
+elif predict_crop == 4:
+  crop_name = 'Coconut'
+elif predict_crop == 5:
+  crop_name = 'Coffee'
+elif predict_crop == 6:
+  crop_name = 'Cotton'
+elif predict_crop == 7:
+  crop_name = 'Grapes'
+elif predict_crop == 8:
+  crop_name = 'Jute'
+elif predict_crop == 9:
+  crop_name = 'Kidneybeans'
+elif predict_crop == 10:
+  crop_name = 'Lentil'
+elif predict_crop == 11:
+  crop_name = 'Maize'
+elif predict_crop == 12:
+  crop_name = 'Mango'
+elif predict_crop == 13:
+  crop_name = 'Mothbeans'
+elif predict_crop == 14:
+  crop_name = 'Mungbeans'
+elif predict_crop == 15:
+  crop_name = 'Muskmelon'
+elif predict_crop == 16:
+  crop_name = 'Orange'
+elif predict_crop == 17:
+  crop_name = 'Papaya'
+elif predict_crop == 18:
+  crop_name = 'Pigeonpeas'
+elif predict_crop == 19:
+  crop_name = 'Pomegranate'
+elif predict_crop == 20:
+  crop_name = 'Rice'
+elif predict_crop == 21:
+  crop_name = 'Watermelon'
 
 print(crop_name)
-# sys.stdout(crop_name)
-# model.save("model.h5")
