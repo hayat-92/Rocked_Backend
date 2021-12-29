@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 app.use(express.json())
 const routes=require("./routes/v1/");
-const url="mongodb://127.0.0.1:27017/cropdb";
+// const url="mongodb://127.0.0.1:27017/cropdb";
+const url="mongodb+srv://faisal:faisal@class-project.crup7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 const mongoose = require("mongoose");
 const passport = require("passport");
 const { jwtStrategy } = require("./middleware/passport");

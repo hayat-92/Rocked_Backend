@@ -8,28 +8,38 @@ const User = require("../../model/User");
 
 const createUser = async (user) => {
     console.log(user)
+    let obj={};
+    obj.flag=true;
     if (!user.password) {
-        throw new Error('Password Required!');
+        // throw new Error('Password Required!');
+        obj.message="Password Required!";
+        obj.flag=false;
     }
     let check = await User.isEmailTaken(user.email);
     if (check) {
-        throw new Error("Email already taken!")
+        // throw new Error("Email already taken!")
+        obj.message="Email already taken!";
+        obj.flag=false;
     } else {
         let doc = await User.create(user);
-        return doc;
+        obj.doc=doc;
+        // return doc;
     }
+    return obj;
 }
 
 const register = async (req, res) => {
     let usr = await createUser(req.body);
     let token = await tokenService.generateAuthTokens(usr);
-    res.status(httpStatus.CREATED).send({
-        user: usr,
-        tokens: token
-    })
-    // res.status(httpStatus.CREATED).send({
-    //     user: usr,
-    // })
+    if(!usr.flag){
+        res.status(httpStatus.BAD_REQUEST).json({message:usr.message});
+    }else{
+        res.status(httpStatus.CREATED).send({
+            user: usr.doc,
+            tokens: token
+        })
+    }
+
 
 };
 

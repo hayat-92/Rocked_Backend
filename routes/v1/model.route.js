@@ -16,9 +16,9 @@ async function callbackfxn(req, res) {
     console.log(req.user)
     childProcess.stdout.on('data', function (data) {
         let vx=data.toString();
-        let userElem=await User.findOne({email:req.user.email});
+        let userElem=User.findOne({email:req.user.email});
         let obj={details:[...(req.body.arr)], cropsuggested:vx};
-        await userElem.history.push(obj);
+        userElem.history.push(obj);
         
 
         res.json({crop_name: vx});
