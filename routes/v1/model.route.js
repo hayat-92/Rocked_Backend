@@ -14,10 +14,10 @@ async function callbackfxn(req, res) {
     console.log('Array:', arr);
     var childProcess = spawn('python', arr);
     console.log(req.user)
-    childProcess.stdout.on('data', function (data) {
+    childProcess.stdout.on('data', async function (data) {
         let vx=data.toString();
-        let userElem=User.findOne({email:req.user.email});
-        let obj={details:[...(req.body.arr)], cropsuggested:vx};
+        let userElem=await User.findOne({email:req.user.email});
+        let obj={details:[...(req.body.arr)], cropSuggested:vx};
         userElem.history.push(obj);
         
 
