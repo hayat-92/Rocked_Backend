@@ -28,7 +28,7 @@ const userSchema = new Schema({
       }
     },
   },
-  // history: [{ name: String, description: String }],
+  history: [{ details:[], cropSuggested:String }],
 });
 
 
