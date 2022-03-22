@@ -9,7 +9,7 @@ const modelRoute=require("./model.route")
 // })
 router.use("/crops", CropRoute);
 router.use("/auth", authRoute);
-router.use("/model", modelRoute);
+// router.use("/model", modelRoute);
 
 
 

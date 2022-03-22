@@ -1,11 +1,12 @@
 import pandas as pd
+import joblib
 from sklearn import preprocessing
 #from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 import sys
 
-excel = pd.read_excel('python/crop.xlsx', header = 0)
+excel = pd.read_excel('crop.xlsx', header = 0)
 
 
 lable = preprocessing.LabelEncoder()
@@ -95,3 +96,4 @@ elif predict_crop == 21:
   crop_name = 'Watermelon'
 
 print(crop_name)
+joblib.dump(regressor, 'RegressorRFC.pkl')
